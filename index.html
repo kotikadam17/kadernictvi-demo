@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HairAtelier – Váš prostor pro krásu</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            'pink-dust':  '#DBC2CF',
+            'slate-light': '#9FA2B2',
+            'teal-chic':  '#3C7A89',
+            'slate-dark': '#2E4756',
+            'navy-black': '#16262E',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    /* Thin navy divider between sections */
+    section + section,
+    section + footer {
+      border-top: 3px solid #16262E;
+    }
+
+    /* Hero image overlay */
+    .hero-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(22,38,46,0.82) 0%, rgba(22,38,46,0.45) 60%, rgba(22,38,46,0.10) 100%);
+    }
+
+    /* Hover underline for nav links */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3C7A89;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Service card image zoom */
+    .service-card:hover .service-img { transform: scale(1.05); }
+
+    /* Testimonial card subtle hover lift */
+    .testimonial-card:hover { transform: translateY(-4px); }
+
+    /* ── Scroll progress bar ── */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(to right, #3C7A89, #DBC2CF);
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ── Scroll-reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* Stagger delays for cards */
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── Parallax hero ── */
+    #hero-bg {
+      will-change: transform;
+    }
+
+    /* ── Scroll-to-top button ── */
+    #scroll-top-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #3C7A89;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(60,122,137,0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      z-index: 1000;
+      cursor: pointer;
+      border: none;
+    }
+    #scroll-top-btn.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    #scroll-top-btn:hover {
+      background: #16262E;
+    }
+  </style>
+</head>
+<body class="font-sans bg-white text-navy-black antialiased">
+
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- Scroll-to-top button -->
+  <button id="scroll-top-btn" aria-label="Zpět nahoru" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa-solid fa-chevron-up text-sm"></i>
+  </button>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <header id="top" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+
+      <!-- Logo -->
+      <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="flex items-center gap-3 flex-shrink-0">
+        <img src="./assets/logo-scissors.svg"
+             onerror="this.style.display='none'"
+             alt="Scissors icon"
+             class="h-8 w-8 object-contain" />
+        <!-- Inline fallback SVG scissors icon -->
+        <svg class="h-8 w-8 text-teal-chic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+        <span class="text-2xl font-extrabold tracking-tight text-navy-black">Hair<span class="text-teal-chic">Atelier</span></span>
+      </a>
+
+      <!-- Center Nav Links (desktop) -->
+      <ul class="hidden lg:flex items-center gap-8 text-sm font-semibold">
+        <li><a href="#about"        class="nav-link text-navy-black hover:text-teal-chic transition-colors">O nás</a></li>
+        <li><a href="#services"     class="nav-link text-navy-black hover:text-teal-chic transition-colors">Služby</a></li>
+        <li><a href="#pricing"      class="nav-link text-navy-black hover:text-teal-chic transition-colors">Ceník</a></li>
+        <li><a href="#testimonials" class="nav-link text-navy-black hover:text-teal-chic transition-colors">Recenze</a></li>
+        <li><a href="#contact"      class="nav-link text-navy-black hover:text-teal-chic transition-colors">Kontakt</a></li>
+      </ul>
+
+      <!-- CTA + Mobile hamburger -->
+      <div class="flex items-center gap-4">
+        <a href="#contact"
+           class="hidden sm:inline-block bg-teal-chic hover:bg-slate-dark text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300 shadow-md">
+          Rezervovat termín
+        </a>
+        <!-- Hamburger (mobile) -->
+        <button id="menu-btn" class="lg:hidden focus:outline-none text-navy-black" aria-label="Otevřít menu">
+          <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-6 pb-6 pt-4">
+      <ul class="flex flex-col gap-4 text-sm font-semibold text-navy-black">
+        <li><a href="#about"        class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">O nás</a></li>
+        <li><a href="#services"     class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Služby</a></li>
+        <li><a href="#pricing"      class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Ceník</a></li>
+        <li><a href="#testimonials" class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Recenze</a></li>
+        <li><a href="#contact"      class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Kontakt</a></li>
+        <li>
+          <a href="#contact"
+             class="inline-block bg-teal-chic text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300"
+             onclick="closeMobileMenu()">
+            Rezervovat termín
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="relative h-screen min-h-[600px] hero-overlay overflow-hidden">
+    <!-- Background image (parallax) -->
+    <img id="hero-bg" src="./assets/hero.jpg"
+         alt="Kadeřnický salon"
+         class="absolute inset-0 w-full h-[120%] -top-[10%] object-cover object-center" />
+
+    <!-- Fallback gradient bg if image is missing -->
+    <div class="absolute inset-0 bg-gradient-to-br from-navy-black via-slate-dark to-teal-chic opacity-90 -z-10"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 h-full flex flex-col justify-center">
+      <div class="max-w-2xl">
+        <!-- Eyebrow -->
+        <span class="inline-block text-pink-dust font-semibold text-sm uppercase tracking-widest mb-6">
+          Kadeřnický salon · Praha
+        </span>
+
+        <!-- Headline -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-4">
+          Vaše vlasy,<br />
+          <span class="text-teal-chic">naše vášeň.</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="text-lg sm:text-xl font-medium text-gray-200 mb-10 max-w-lg leading-relaxed">
+          Profesionální péče o vlasy v srdci Prahy. Přijďte si pro nový vzhled a odejděte s úsměvem.
+        </p>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact"
+             class="bg-teal-chic hover:bg-white hover:text-teal-chic text-white font-bold px-8 py-4 rounded-full shadow-xl transition-all duration-300 text-base">
+            Chci změnu
+          </a>
+          <a href="#services"
+             class="border-2 border-white text-white hover:bg-white hover:text-navy-black font-bold px-8 py-4 rounded-full transition-all duration-300 text-base">
+            Naše služby
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white opacity-60 hover:opacity-100 transition-opacity animate-bounce">
+      <i class="fa-solid fa-chevron-down text-2xl"></i>
+    </a>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" class="py-16 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+        <!-- Image mosaic -->
+        <div class="grid grid-cols-2 gap-4 reveal-left">
+          <div class="col-span-2 rounded-2xl overflow-hidden h-64 bg-pink-dust">
+            <img src="./assets/about1.jpg" alt="Salon interiér"
+                 class="w-full h-full object-cover" />
+          </div>
+          <div class="rounded-2xl overflow-hidden h-44 bg-slate-light">
+            <img src="./assets/about2.jpg" alt="Kadeřnice při práci"
+                 class="w-full h-full object-cover" />
+          </div>
+          <div class="rounded-2xl overflow-hidden h-44 bg-teal-chic">
+            <img src="./assets/about3.jpg" alt="Detail střihu"
+                 class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="reveal-right">
+          <span class="text-teal-chic font-bold text-sm uppercase tracking-widest">O nás</span>
+          <h2 class="text-3xl lg:text-5xl font-extrabold text-navy-black mt-3 mb-6 leading-tight">
+            Více než jen<br />kadeřnictví.
+          </h2>
+          <p class="text-slate-light font-medium text-base leading-relaxed mb-5">
+            V HairAtelier věříme, že návštěva kadeřníka nemá být jen o rychlém zastřihnutí konečků. Chtěli jsme vytvořit útulné místo, kam si přijdete odpočinout. Nejedeme na kvantitu, ale na to, abyste se u nás cítili opravdu dobře a odcházeli s úsměvem.
+          </p>
+          <p class="text-slate-light font-medium text-base leading-relaxed mb-8">
+            Baví nás moderní střihy a přirozené prosvětlování, ale ze všeho nejvíc nás baví naslouchat tomu, co s vlasy vlastně chcete udělat vy. Používáme jen péči, které sami stoprocentně věříme, a dáváme si záležet na každém detailu. Váš skvělý pocit při pohledu do zrcadla je pro nás totiž ta nejlepší možná vizitka.
+          </p>
+          <div class="flex flex-wrap gap-6 lg:gap-10">
+            <div>
+              <p class="text-4xl font-extrabold text-teal-chic counter" data-target="8" data-suffix="+">0</p>
+              <p class="text-sm font-semibold text-slate-light mt-1">let zkušeností</p>
+            </div>
+            <div>
+              <p class="text-4xl font-extrabold text-teal-chic counter" data-target="2000" data-suffix="+" data-format="space">0</p>
+              <p class="text-sm font-semibold text-slate-light mt-1">spokojených klientů</p>
+            </div>
+            <div>
+              <p class="text-4xl font-extrabold text-teal-chic counter" data-target="4.7" data-suffix=" ★" data-decimals="1">0</p>
+              <p class="text-sm font-semibold text-slate-light mt-1">průměrné hodnocení</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section id="services" class="py-16 lg:py-28 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <!-- Section Header -->
+      <div class="text-center mb-16 reveal">
+        <span class="text-teal-chic font-bold text-sm uppercase tracking-widest">Co nabízíme</span>
+        <h2 class="text-3xl lg:text-5xl font-extrabold text-navy-black mt-3">Naše služby</h2>
+        <p class="text-slate-light font-medium mt-4 max-w-xl mx-auto">
+          Od každodenního střihu po luxusní barvení – vždy s maximální péčí a precizností.
+        </p>
+      </div>
+
+      <!-- Service Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Card 1 -->
+        <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 reveal reveal-delay-1">
+          <div class="overflow-hidden h-56 bg-pink-dust">
+            <img src="./assets/service1.jpg" alt="Dámský střih"
+                 class="service-img w-full h-full object-cover transition-transform duration-500" />
+          </div>
+          <div class="p-7">
+            <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-scissors text-teal-chic text-sm"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-navy-black mb-2">Dámský střih</h3>
+            <p class="text-slate-light font-medium text-sm leading-relaxed">
+              Klasické i avantgardní střihy přizpůsobené tvaru vaší tváře a stylu.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 reveal reveal-delay-2">
+          <div class="overflow-hidden h-56 bg-slate-light">
+            <img src="./assets/service2.jpg" alt="Barvení a Balayage"
+                 class="service-img w-full h-full object-cover transition-transform duration-500" />
+          </div>
+          <div class="p-7">
+            <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-paintbrush text-teal-chic text-sm"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-navy-black mb-2">Barvení & Balayage</h3>
+            <p class="text-slate-light font-medium text-sm leading-relaxed">
+              Moderní techniky barvení pro přirozený, zářivý výsledek s dlouhotrvajícím efektem.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 reveal reveal-delay-3">
+          <div class="overflow-hidden h-56 bg-teal-chic/30">
+            <img src="./assets/service3.jpg" alt="Pánský střih"
+                 class="service-img w-full h-full object-cover transition-transform duration-500" />
+          </div>
+          <div class="p-7">
+            <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-user text-teal-chic text-sm"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-navy-black mb-2">Pánský střih</h3>
+            <p class="text-slate-light font-medium text-sm leading-relaxed">
+              Precizní střihy pro moderního muže – včetně úpravy vousů a konturování.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cards 4 + 5 – centered row -->
+        <div class="sm:col-span-2 lg:col-span-3 flex flex-col sm:flex-row justify-center gap-8">
+
+          <!-- Card 4 -->
+          <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 w-full sm:w-80 lg:w-96 reveal reveal-delay-2">
+            <div class="overflow-hidden h-56 bg-pink-dust/60">
+              <img src="./assets/service4.jpg" alt="Keratinová péče"
+                   class="service-img w-full h-full object-cover transition-transform duration-500" />
+            </div>
+            <div class="p-7">
+              <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-star text-teal-chic text-sm"></i>
+              </div>
+              <h3 class="text-xl font-extrabold text-navy-black mb-2">Keratinová péče</h3>
+              <p class="text-slate-light font-medium text-sm leading-relaxed">
+                Regenerační ošetření pro hebké, lesklé vlasy bez krepatění po dobu až 4 měsíců.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 w-full sm:w-80 lg:w-96 reveal reveal-delay-3">
+            <div class="overflow-hidden h-56 bg-slate-dark/20">
+              <img src="./assets/service5.jpg" alt="Svatební styling"
+                   class="service-img w-full h-full object-cover transition-transform duration-500" />
+            </div>
+            <div class="p-7">
+              <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-heart text-teal-chic text-sm"></i>
+              </div>
+              <h3 class="text-xl font-extrabold text-navy-black mb-2">Svatební styling</h3>
+              <p class="text-slate-light font-medium text-sm leading-relaxed">
+                Nezapomenutelný účes na váš nejdůležitější den – s konzultací a přípravou.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section id="pricing" class="py-16 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+
+        <!-- Left: Heading -->
+        <div class="lg:sticky top-28">
+          <span class="text-teal-chic font-bold text-sm uppercase tracking-widest">Transparentní ceny</span>
+          <h2 class="text-3xl lg:text-5xl font-extrabold text-navy-black mt-3 mb-6 leading-tight">
+            Ceník služeb
+          </h2>
+          <p class="text-slate-light font-medium leading-relaxed mb-8">
+            Věříme v otevřenost. Níže najdete přehled našich cen – konečná cena se může lišit dle délky a hustoty vlasů. Rádi vám sdělíme přesnou kalkulaci při rezervaci.
+          </p>
+          <a href="#contact"
+             class="inline-block bg-teal-chic text-white font-bold px-8 py-4 rounded-full hover:bg-slate-dark transition-colors duration-300">
+            Rezervovat termín
+          </a>
+        </div>
+
+        <!-- Right: Price list -->
+        <div class="divide-y divide-gray-100">
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Dámský střih</p>
+              <p class="text-sm font-medium text-slate-light">Vč. mytí, foukané a stylingu</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">od 1 500 Kč</span>
+          </div>
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Pánský precizní střih</p>
+              <p class="text-sm font-medium text-slate-light">Vč. mytí a stylingu</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">950 Kč</span>
+          </div>
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Foukaná a hloubková péče</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">1 100 Kč</span>
+          </div>
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Barvení – jednotný odstín</p>
+              <p class="text-sm font-medium text-slate-light">Vč. foukané</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">od 2 200 Kč</span>
+          </div>
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Balayage / Melír</p>
+              <p class="text-sm font-medium text-slate-light">Vč. tónování a péče</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">od 4 200 Kč</span>
+          </div>
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Společenský účes / Styling na akci</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">od 1 600 Kč</span>
+          </div>
+
+          <!-- Note -->
+          <p class="text-xs font-medium text-slate-light pt-5">
+            * Ceny jsou orientační. Platba kartou i hotovostí.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section id="testimonials" class="py-16 lg:py-28 bg-navy-black">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="text-pink-dust font-bold text-sm uppercase tracking-widest">Co říkají klienti</span>
+        <h2 class="text-3xl lg:text-5xl font-extrabold text-white mt-3">Recenze</h2>
+        <div class="flex justify-center gap-1 mt-4">
+          <i class="fa-solid fa-star text-yellow-400"></i>
+          <i class="fa-solid fa-star text-yellow-400"></i>
+          <i class="fa-solid fa-star text-yellow-400"></i>
+          <i class="fa-solid fa-star text-yellow-400"></i>
+          <i class="fa-solid fa-star-half-stroke text-yellow-400"></i>
+          <span class="text-slate-light font-semibold text-sm ml-2 mt-0.5">4,7 / 5 · 120+ recenzí</span>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Card 1 -->
+        <div class="testimonial-card bg-slate-dark rounded-2xl p-8 shadow-xl transition-transform duration-300 reveal reveal-delay-1">
+          <div class="flex gap-1 mb-5">
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-white font-semibold italic text-base leading-relaxed mb-6">
+            "Balayage dopadl skvěle, přesně jak jsem chtěla. Holky tam jsou moc příjemné a prostředí je fajn. Určitě se vrátím!"
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-teal-chic flex items-center justify-center text-white font-extrabold text-lg">
+              J
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm">Jana M.</p>
+              <p class="text-slate-light text-xs font-medium">Praha 2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="testimonial-card bg-slate-dark rounded-2xl p-8 shadow-xl transition-transform duration-300 reveal reveal-delay-2">
+          <div class="flex gap-1 mb-5">
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-white font-semibold italic text-base leading-relaxed mb-6">
+            "Konečně kadeřník, který ví, co dělá! Pánský střih přesně na míru, příjemná atmosféra a skvělý přístup. Doporučuji všem pánům v okolí."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-pink-dust flex items-center justify-center text-navy-black font-extrabold text-lg">
+              P
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm">Petr S.</p>
+              <p class="text-slate-light text-xs font-medium">Praha 5</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="testimonial-card bg-slate-dark rounded-2xl p-8 shadow-xl transition-transform duration-300 reveal reveal-delay-3">
+          <div class="flex gap-1 mb-5">
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-white font-semibold italic text-base leading-relaxed mb-6">
+            "Dala jsem si udělat svatební účes a bylo to naprosto dokonalé. Tým byl velmi profesionální a trpělivý. Celý den jsem cítila jako hvězda!"
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-slate-light flex items-center justify-center text-white font-extrabold text-lg">
+              K
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm">Kateřina V.</p>
+              <p class="text-slate-light text-xs font-medium">Brno</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="testimonial-card bg-slate-dark rounded-2xl p-8 shadow-xl transition-transform duration-300 reveal reveal-delay-1">
+          <div class="flex gap-1 mb-5">
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-white font-semibold italic text-base leading-relaxed mb-6">
+            "Navštívila jsem salon poprvé a jsem nadšená. Dala jsem si udělat melír a výsledek předčil moje očekávání – přirozený, zářivý a přesně to, co jsem chtěla!"
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-teal-chic/70 flex items-center justify-center text-white font-extrabold text-lg">
+              M
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm">Monika T.</p>
+              <p class="text-slate-light text-xs font-medium">Praha 8</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="testimonial-card bg-slate-dark rounded-2xl p-8 shadow-xl transition-transform duration-300 reveal reveal-delay-2">
+          <div class="flex gap-1 mb-5">
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+            <i class="fa-regular fa-star text-yellow-400 text-sm"></i>
+          </div>
+          <p class="text-white font-semibold italic text-base leading-relaxed mb-6">
+            "Skvělý přístup a hezký výsledek. Přišel jsem bez přesné představy a odešel jsem s účesem, který mi sedí. Příště bych jen uvítal trochu delší konzultaci předem."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-pink-dust/80 flex items-center justify-center text-navy-black font-extrabold text-lg">
+              L
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm">Lukáš H.</p>
+              <p class="text-slate-light text-xs font-medium">Praha 1</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 – CTA -->
+        <div class="testimonial-card rounded-2xl p-8 border-2 border-teal-chic/40 flex flex-col justify-center items-center text-center transition-transform duration-300 reveal reveal-delay-3">
+          <i class="fa-brands fa-google text-teal-chic text-3xl mb-4"></i>
+          <p class="text-white font-bold text-base mb-2">Přečtěte si více recenzí</p>
+          <p class="text-slate-light text-sm font-medium mb-6">Průměrné hodnocení 4,7 hvězdičky na Google Maps.</p>
+          <a href="#"
+             class="bg-teal-chic text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-pink-dust hover:text-navy-black transition-colors duration-300">
+            Google recenze
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="bg-white py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <!-- Header -->
+      <div class="mb-8 lg:mb-14">
+        <span class="text-teal-chic font-bold text-sm uppercase tracking-widest">Kontakt</span>
+        <h2 class="text-3xl lg:text-5xl font-extrabold text-navy-black mt-3">Kde nás najdete</h2>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+
+        <!-- Left: info -->
+        <div class="flex flex-col gap-8 reveal-left">
+
+          <!-- Contact cards -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-slate-dark rounded-2xl p-6 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-teal-chic/20 flex-shrink-0 flex items-center justify-center">
+                <i class="fa-solid fa-location-dot text-teal-chic"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-sm mb-1">Adresa</p>
+                <p class="text-slate-light text-sm font-medium leading-relaxed">Mánesova 28<br />120 00 Praha 2</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-dark rounded-2xl p-6 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-teal-chic/20 flex-shrink-0 flex items-center justify-center">
+                <i class="fa-solid fa-phone text-teal-chic"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-sm mb-1">Telefon</p>
+                <a href="tel:+420777888999" class="text-slate-light text-sm font-medium hover:text-teal-chic transition-colors">+420 777 888 999</a>
+              </div>
+            </div>
+
+            <div class="bg-slate-dark rounded-2xl p-6 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-teal-chic/20 flex-shrink-0 flex items-center justify-center">
+                <i class="fa-solid fa-envelope text-teal-chic"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-sm mb-1">E-mail</p>
+                <a href="mailto:info@hairatelier.cz" class="text-slate-light text-sm font-medium hover:text-teal-chic transition-colors">info@hairatelier.cz</a>
+              </div>
+            </div>
+
+            <div class="bg-slate-dark rounded-2xl p-6 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-teal-chic/20 flex-shrink-0 flex items-center justify-center">
+                <i class="fa-solid fa-clock text-teal-chic"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-sm mb-1">Otevírací doba</p>
+                <p class="text-slate-light text-sm font-medium">Po–Pá: 9:00 – 19:00</p>
+                <p class="text-slate-light text-sm font-medium">So: 9:00 – 15:00</p>
+                <p class="text-slate-light text-sm font-medium">Ne: Zavřeno</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social + CTA -->
+          <div class="bg-teal-chic rounded-2xl p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+            <div>
+              <p class="text-white font-extrabold text-base mb-1">Napište nám</p>
+              <p class="text-white/70 text-sm font-medium">Odpovídáme do 24 hodin.</p>
+            </div>
+            <a href="mailto:info@hairatelier.cz"
+               class="flex-shrink-0 bg-white text-teal-chic font-bold text-sm px-7 py-3 rounded-full hover:bg-navy-black hover:text-white transition-colors duration-300">
+              Odeslat e-mail
+            </a>
+          </div>
+
+          <!-- Social icons -->
+          <div class="flex items-center gap-3">
+            <span class="text-slate-light text-xs font-semibold uppercase tracking-widest mr-2">Sledujte nás</span>
+            <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-dark text-white flex items-center justify-center hover:bg-teal-chic transition-colors duration-300">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-slate-dark text-white flex items-center justify-center hover:bg-teal-chic transition-colors duration-300">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" aria-label="TikTok" class="w-10 h-10 rounded-full bg-slate-dark text-white flex items-center justify-center hover:bg-teal-chic transition-colors duration-300">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Google Maps -->
+        <div class="bg-teal-chic rounded-2xl p-3 shadow-2xl min-h-[420px] reveal-right">
+          <iframe
+            src="https://maps.google.com/maps?q=Mánesova+28,+Praha+2,+Czech+Republic&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="100%"
+            style="min-height:420px; border:0; display:block; border-radius:0.75rem;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa – HairAtelier">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-slate-dark py-6">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-slate-light text-xs font-medium">© 2026 HairAtelier. Všechna práva vyhrazena.</p>
+      <div class="flex items-center gap-2">
+        <svg class="h-5 w-5 text-teal-chic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+        <span class="text-white font-extrabold text-sm">Hair<span class="text-teal-chic">Atelier</span></span>
+      </div>
+      <div class="flex gap-5 text-xs font-semibold text-slate-light">
+        <a href="#" class="hover:text-teal-chic transition-colors">Ochrana soukromí</a>
+        <a href="#" class="hover:text-teal-chic transition-colors">Podmínky použití</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      menuBtn.innerHTML = isOpen
+        ? '<i class="fa-solid fa-bars text-2xl"></i>'
+        : '<i class="fa-solid fa-xmark text-2xl"></i>';
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      menuBtn.innerHTML = '<i class="fa-solid fa-bars text-2xl"></i>';
+    }
+
+    // Highlight active nav link on scroll
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.remove('text-teal-chic');
+            if (link.getAttribute('href') === '#' + entry.target.id) {
+              link.classList.add('text-teal-chic');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(section => observer.observe(section));
+
+    // ── Scroll progress bar ──
+    const progressBar = document.getElementById('scroll-progress');
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+
+    // ── Scroll-to-top button ──
+    const scrollTopBtn = document.getElementById('scroll-top-btn');
+    function updateScrollTopBtn() {
+      if (window.scrollY > 400) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    }
+    window.addEventListener('scroll', updateScrollTopBtn, { passive: true });
+
+    // ── Parallax hero (desktop only) ──
+    const heroBg = document.getElementById('hero-bg');
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    function updateParallax() {
+      if (heroBg && !isTouch) {
+        const scrolled = window.scrollY;
+        heroBg.style.transform = 'translateY(' + (scrolled * 0.35) + 'px)';
+      }
+    }
+    window.addEventListener('scroll', updateParallax, { passive: true });
+
+    // ── Scroll reveal ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── Animated counters ──
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const decimals = parseInt(el.dataset.decimals || '0');
+      const format = el.dataset.format;
+      const duration = 1800;
+      const start = performance.now();
+
+      function formatNum(val) {
+        if (decimals > 0) return val.toFixed(decimals);
+        const int = Math.floor(val);
+        if (format === 'space') return int.toLocaleString('cs-CZ').replace(/\s/g, ' ');
+        return int.toString();
+      }
+
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = formatNum(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  </script>
+
+</body>
+</html>

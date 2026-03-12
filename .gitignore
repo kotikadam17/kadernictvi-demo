@@ -1,0 +1,13 @@
+# API keys
+.env
+
+# Node
+node_modules/
+
+# Dev scripts
+generate-assets.js
+server.js
+
+# OS
+.DS_Store
+Thumbs.db
