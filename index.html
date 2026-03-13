@@ -157,6 +157,23 @@
     #scroll-top-btn:hover {
       background: #16262E;
     }
+
+    /* ── Contact modal ── */
+    #contact-modal {
+      display: none;
+    }
+    #contact-modal.open {
+      display: flex !important;
+    }
+    #modal-panel {
+      transform: scale(0.95) translateY(20px);
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    #contact-modal.open #modal-panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
   </style>
 </head>
 <body class="font-sans bg-white text-navy-black antialiased">
@@ -741,10 +758,10 @@
               <p class="text-white font-extrabold text-base mb-1">Napište nám</p>
               <p class="text-white/70 text-sm font-medium">Odpovídáme do 24 hodin.</p>
             </div>
-            <a href="mailto:info@hairatelier.cz"
-               class="flex-shrink-0 bg-white text-teal-chic font-bold text-sm px-7 py-3 rounded-full hover:bg-navy-black hover:text-white transition-colors duration-300">
+            <button onclick="openContactModal()"
+               class="flex-shrink-0 bg-white text-teal-chic font-bold text-sm px-7 py-3 rounded-full hover:bg-navy-black hover:text-white transition-colors duration-300 cursor-pointer border-0">
               Odeslat e-mail
-            </a>
+            </button>
           </div>
 
           <!-- Social icons -->
@@ -798,6 +815,80 @@
       </div>
     </div>
   </footer>
+
+  <!-- ===================== CONTACT MODAL ===================== -->
+  <div id="contact-modal"
+       class="fixed inset-0 z-[9998] flex items-center justify-center p-4"
+       style="display:none !important;"
+       aria-modal="true" role="dialog">
+
+    <!-- Backdrop -->
+    <div id="modal-backdrop"
+         class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+         onclick="closeContactModal()"></div>
+
+    <!-- Panel -->
+    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 sm:p-10 z-10 animate-none"
+         id="modal-panel">
+
+      <!-- Close -->
+      <button onclick="closeContactModal()"
+              class="absolute top-5 right-5 text-slate-light hover:text-navy-black transition-colors"
+              aria-label="Zavřít">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <!-- Header -->
+      <div class="mb-7">
+        <span class="text-teal-chic font-bold text-xs uppercase tracking-widest">HairAtelier</span>
+        <h3 class="text-2xl font-extrabold text-navy-black mt-1">Napište nám</h3>
+        <p class="text-slate-light text-sm font-medium mt-1">Odpovídáme do 24 hodin.</p>
+      </div>
+
+      <!-- Form -->
+      <form id="contact-form" action="https://formspree.io/f/xdawzqyl" method="POST"
+            onsubmit="handleFormSubmit(event)">
+
+        <div class="flex flex-col gap-4">
+
+          <div>
+            <label class="block text-xs font-bold text-navy-black uppercase tracking-widest mb-1.5">Vaše jméno *</label>
+            <input type="text" name="jmeno" required placeholder="Jana Nováková"
+                   class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-navy-black placeholder-slate-light focus:outline-none focus:border-teal-chic transition-colors" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-navy-black uppercase tracking-widest mb-1.5">Telefon nebo e-mail *</label>
+            <input type="text" name="kontakt" required placeholder="+420 777 000 000 nebo vas@email.cz"
+                   class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-navy-black placeholder-slate-light focus:outline-none focus:border-teal-chic transition-colors" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-navy-black uppercase tracking-widest mb-1.5">Zpráva *</label>
+            <textarea name="zprava" required rows="4" placeholder="Napište nám, co vás zajímá – termín, služba, dotaz..."
+                      class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-navy-black placeholder-slate-light focus:outline-none focus:border-teal-chic transition-colors resize-none"></textarea>
+          </div>
+
+          <input type="hidden" name="_subject" value="Nová zpráva z webu – HairAtelier" />
+          <input type="hidden" name="_replyto" value="kotika@gvp.cz" />
+
+          <button type="submit"
+                  class="w-full bg-teal-chic hover:bg-slate-dark text-white font-bold text-sm px-7 py-4 rounded-full transition-colors duration-300 mt-1">
+            Odeslat zprávu
+          </button>
+        </div>
+      </form>
+
+      <!-- Success message (hidden) -->
+      <div id="form-success" class="hidden text-center py-8">
+        <div class="w-16 h-16 rounded-full bg-teal-chic/10 flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-check text-teal-chic text-2xl"></i>
+        </div>
+        <h4 class="text-xl font-extrabold text-navy-black mb-2">Zpráva odeslána!</h4>
+        <p class="text-slate-light text-sm font-medium">Ozveme se vám co nejdříve.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- ===================== SCRIPTS ===================== -->
   <script>
@@ -918,6 +1009,52 @@
     }, { threshold: 0.5 });
 
     document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // ── Contact modal ──
+    const contactModal = document.getElementById('contact-modal');
+
+    function openContactModal() {
+      contactModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+      contactModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeContactModal();
+    });
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Odesílám...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.classList.add('hidden');
+          document.getElementById('form-success').classList.remove('hidden');
+          setTimeout(closeContactModal, 3000);
+        } else {
+          btn.textContent = 'Chyba – zkuste znovu';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Chyba – zkuste znovu';
+        btn.disabled = false;
+      }
+    }
 
   </script>
 
