@@ -217,10 +217,10 @@
 
       <!-- CTA + Mobile hamburger -->
       <div class="flex items-center gap-4">
-        <a href="#contact"
-           class="hidden sm:inline-block bg-teal-chic hover:bg-slate-dark text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300 shadow-md">
+        <button onclick="openContactModal()"
+           class="hidden sm:inline-block bg-teal-chic hover:bg-slate-dark text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300 shadow-md cursor-pointer border-0">
           Rezervovat termín
-        </a>
+        </button>
         <!-- Hamburger (mobile) -->
         <button id="menu-btn" class="lg:hidden focus:outline-none text-navy-black" aria-label="Otevřít menu">
           <i class="fa-solid fa-bars text-2xl"></i>
@@ -237,11 +237,11 @@
         <li><a href="#testimonials" class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Recenze</a></li>
         <li><a href="#contact"      class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Kontakt</a></li>
         <li>
-          <a href="#contact"
-             class="inline-block bg-teal-chic text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300"
-             onclick="closeMobileMenu()">
+          <button
+             class="inline-block bg-teal-chic text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300 cursor-pointer border-0"
+             onclick="closeMobileMenu(); openContactModal()">
             Rezervovat termín
-          </a>
+          </button>
         </li>
       </ul>
     </div>
@@ -472,10 +472,10 @@
           <p class="text-slate-light font-medium leading-relaxed mb-8">
             Věříme v otevřenost. Níže najdete přehled našich cen – konečná cena se může lišit dle délky a hustoty vlasů. Rádi vám sdělíme přesnou kalkulaci při rezervaci.
           </p>
-          <a href="#contact"
-             class="inline-block bg-teal-chic text-white font-bold px-8 py-4 rounded-full hover:bg-slate-dark transition-colors duration-300">
+          <button onclick="openContactModal()"
+             class="inline-block bg-teal-chic text-white font-bold px-8 py-4 rounded-full hover:bg-slate-dark transition-colors duration-300 cursor-pointer border-0">
             Rezervovat termín
-          </a>
+          </button>
         </div>
 
         <!-- Right: Price list -->
