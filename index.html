@@ -132,6 +132,11 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+    }
+    body.cookie-visible #scroll-top-btn {
+      bottom: 5rem;
+    }
+    #scroll-top-btn {
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -300,15 +305,15 @@
         <div class="grid grid-cols-2 gap-4 reveal-left">
           <div class="col-span-2 rounded-2xl overflow-hidden h-64 bg-pink-dust">
             <img src="./assets/about1.jpg" alt="Salon interiér"
-                 class="w-full h-full object-cover" />
+                 class="w-full h-full object-cover" loading="lazy" />
           </div>
           <div class="rounded-2xl overflow-hidden h-44 bg-slate-light">
             <img src="./assets/about2.jpg" alt="Kadeřnice při práci"
-                 class="w-full h-full object-cover" />
+                 class="w-full h-full object-cover" loading="lazy" />
           </div>
           <div class="rounded-2xl overflow-hidden h-44 bg-teal-chic">
             <img src="./assets/about3.jpg" alt="Detail střihu"
-                 class="w-full h-full object-cover" />
+                 class="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 
@@ -363,7 +368,7 @@
         <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 reveal reveal-delay-1">
           <div class="overflow-hidden h-56 bg-pink-dust">
             <img src="./assets/service1.jpg" alt="Dámský střih"
-                 class="service-img w-full h-full object-cover transition-transform duration-500" />
+                 class="service-img w-full h-full object-cover transition-transform duration-500" loading="lazy" />
           </div>
           <div class="p-7">
             <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
@@ -380,7 +385,7 @@
         <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 reveal reveal-delay-2">
           <div class="overflow-hidden h-56 bg-slate-light">
             <img src="./assets/service2.jpg" alt="Barvení a Balayage"
-                 class="service-img w-full h-full object-cover transition-transform duration-500" />
+                 class="service-img w-full h-full object-cover transition-transform duration-500" loading="lazy" />
           </div>
           <div class="p-7">
             <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
@@ -397,7 +402,7 @@
         <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 reveal reveal-delay-3">
           <div class="overflow-hidden h-56 bg-teal-chic/30">
             <img src="./assets/service3.jpg" alt="Pánský střih"
-                 class="service-img w-full h-full object-cover transition-transform duration-500" />
+                 class="service-img w-full h-full object-cover transition-transform duration-500" loading="lazy" />
           </div>
           <div class="p-7">
             <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
@@ -414,10 +419,10 @@
         <div class="sm:col-span-2 lg:col-span-3 flex flex-col sm:flex-row justify-center gap-8">
 
           <!-- Card 4 -->
-          <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 w-full sm:w-80 lg:w-96 reveal reveal-delay-2">
+          <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 w-full sm:flex-1 lg:max-w-96 reveal reveal-delay-2">
             <div class="overflow-hidden h-56 bg-pink-dust/60">
               <img src="./assets/service4.jpg" alt="Keratinová péče"
-                   class="service-img w-full h-full object-cover transition-transform duration-500" />
+                   class="service-img w-full h-full object-cover transition-transform duration-500" loading="lazy" />
             </div>
             <div class="p-7">
               <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
@@ -431,10 +436,10 @@
           </div>
 
           <!-- Card 5 -->
-          <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 w-full sm:w-80 lg:w-96 reveal reveal-delay-3">
+          <div class="service-card bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 w-full sm:flex-1 lg:max-w-96 reveal reveal-delay-3">
             <div class="overflow-hidden h-56 bg-slate-dark/20">
               <img src="./assets/service5.jpg" alt="Styling na akci"
-                   class="service-img w-full h-full object-cover transition-transform duration-500" />
+                   class="service-img w-full h-full object-cover transition-transform duration-500" loading="lazy" />
             </div>
             <div class="p-7">
               <div class="w-10 h-10 rounded-full bg-teal-chic/10 flex items-center justify-center mb-4">
@@ -831,7 +836,7 @@
          onclick="closeContactModal()"></div>
 
     <!-- Panel -->
-    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 sm:p-10 z-10 animate-none"
+    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg p-5 sm:p-8 lg:p-10 z-10 animate-none"
          id="modal-panel">
 
       <!-- Close -->
@@ -873,7 +878,6 @@
           </div>
 
           <input type="hidden" name="_subject" value="Nová zpráva z webu – HairAtelier" />
-          <input type="hidden" name="_replyto" value="kotika@gvp.cz" />
 
           <button type="submit"
                   class="w-full bg-teal-chic hover:bg-slate-dark text-white font-bold text-sm px-7 py-4 rounded-full transition-colors duration-300 mt-1">
@@ -1085,12 +1089,14 @@
       var banner = document.getElementById('cookie-banner');
       if (!localStorage.getItem('cookies_accepted')) {
         banner.style.display = 'block';
+        document.body.classList.add('cookie-visible');
       }
     })();
 
     function acceptCookies() {
       localStorage.setItem('cookies_accepted', '1');
       document.getElementById('cookie-banner').style.display = 'none';
+      document.body.classList.remove('cookie-visible');
     }
   </script>
 
