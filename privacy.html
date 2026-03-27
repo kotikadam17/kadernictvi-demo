@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ochrana soukromí – HairAtelier</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Poppins', 'sans-serif'] },
+          colors: {
+            'pink-dust':   '#DBC2CF',
+            'slate-light': '#9FA2B2',
+            'teal-chic':   '#3C7A89',
+            'slate-dark':  '#2E4756',
+            'navy-black':  '#16262E',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+  </style>
+</head>
+<body class="font-sans bg-white text-navy-black antialiased">
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+      <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+        <svg class="h-8 w-8 text-teal-chic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+        <span class="text-2xl font-extrabold tracking-tight text-navy-black">Hair<span class="text-teal-chic">Atelier</span></span>
+      </a>
+      <a href="index.html" class="text-sm font-semibold text-navy-black hover:text-teal-chic transition-colors flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left text-xs"></i> Zpět na web
+      </a>
+    </nav>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="max-w-3xl mx-auto px-6 py-16 lg:py-24">
+
+    <!-- Header -->
+    <div class="mb-12">
+      <span class="text-teal-chic font-bold text-sm uppercase tracking-widest">Právní informace</span>
+      <h1 class="text-3xl lg:text-5xl font-extrabold text-navy-black mt-3 mb-4 leading-tight">Ochrana soukromí</h1>
+      <p class="text-slate-light font-medium">Poslední aktualizace: březen 2026</p>
+    </div>
+
+    <div class="flex flex-col gap-10 text-base leading-relaxed">
+
+      <!-- 1 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">1. Správce osobních údajů</h2>
+        <p class="text-slate-light font-medium">
+          Správcem vašich osobních údajů je:<br /><br />
+          <strong class="text-navy-black">HairAtelier</strong><br />
+          Mánesova 28, 120 00 Praha 2<br />
+          E-mail: <a href="mailto:info@hairatelier.cz" class="text-teal-chic hover:underline">info@hairatelier.cz</a><br />
+          Telefon: <a href="tel:+420777888999" class="text-teal-chic hover:underline">+420 777 888 999</a>
+        </p>
+      </section>
+
+      <!-- 2 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">2. Jaké údaje zpracováváme</h2>
+        <p class="text-slate-light font-medium mb-3">
+          Prostřednictvím kontaktního formuláře na tomto webu shromažďujeme pouze údaje, které nám sami poskytnete:
+        </p>
+        <ul class="list-disc list-inside text-slate-light font-medium space-y-1 pl-2">
+          <li>Jméno a příjmení</li>
+          <li>Telefonní číslo nebo e-mailová adresa</li>
+          <li>Obsah vaší zprávy (dotaz, zájem o termín apod.)</li>
+        </ul>
+      </section>
+
+      <!-- 3 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">3. Účel zpracování</h2>
+        <p class="text-slate-light font-medium">
+          Vaše údaje používáme výhradně k tomu, abychom odpověděli na váš dotaz nebo potvrdili rezervaci termínu. Údaje nepředáváme třetím stranám za marketingovými účely ani je neprodáváme.
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">4. Doba uchování</h2>
+        <p class="text-slate-light font-medium">
+          Vaše osobní údaje uchováváme po dobu nejvýše <strong class="text-navy-black">1 roku</strong> od poslední komunikace. Po uplynutí této doby jsou údaje vymazány.
+        </p>
+      </section>
+
+      <!-- 5 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">5. Vaše práva</h2>
+        <p class="text-slate-light font-medium mb-3">V souladu s nařízením GDPR máte právo:</p>
+        <ul class="list-disc list-inside text-slate-light font-medium space-y-1 pl-2">
+          <li><strong class="text-navy-black">Přístupu</strong> – požádat o přehled údajů, které o vás vedeme</li>
+          <li><strong class="text-navy-black">Opravy</strong> – nechat opravit nepřesné nebo neúplné údaje</li>
+          <li><strong class="text-navy-black">Výmazu</strong> – požádat o smazání vašich údajů ("právo být zapomenut")</li>
+          <li><strong class="text-navy-black">Přenositelnosti</strong> – obdržet vaše údaje v strojově čitelném formátu</li>
+          <li><strong class="text-navy-black">Námitky</strong> – vznést námitku proti zpracování</li>
+        </ul>
+        <p class="text-slate-light font-medium mt-3">
+          Pro uplatnění práv nás kontaktujte na <a href="mailto:info@hairatelier.cz" class="text-teal-chic hover:underline">info@hairatelier.cz</a>. Na vaši žádost odpovíme do 30 dnů.
+        </p>
+      </section>
+
+      <!-- 6 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">6. Cookies a třetí strany</h2>
+        <p class="text-slate-light font-medium mb-3">
+          Tento web nepoužívá marketingové ani analytické cookies. Načítáme pouze nezbytné technické zdroje od třetích stran:
+        </p>
+        <ul class="list-disc list-inside text-slate-light font-medium space-y-1 pl-2">
+          <li><strong class="text-navy-black">Google Fonts</strong> – načítání písma Poppins</li>
+          <li><strong class="text-navy-black">Google Maps</strong> – zobrazení mapy s adresou salonu</li>
+          <li><strong class="text-navy-black">Formspree</strong> – zpracování kontaktního formuláře</li>
+          <li><strong class="text-navy-black">Tailwind CSS CDN / FontAwesome CDN</strong> – vzhled webu</li>
+        </ul>
+        <p class="text-slate-light font-medium mt-3">
+          Tyto služby mohou ukládat vlastní cookies dle svých podmínek. Doporučujeme prostudovat jejich zásady ochrany soukromí.
+        </p>
+      </section>
+
+      <!-- 7 -->
+      <section>
+        <h2 class="text-xl font-extrabold text-navy-black mb-3">7. Dozorový orgán</h2>
+        <p class="text-slate-light font-medium">
+          Máte právo podat stížnost u dozorového orgánu – <strong class="text-navy-black">Úřadu pro ochranu osobních údajů (ÚOOÚ)</strong>, Pplk. Sochora 27, 170 00 Praha 7, <a href="https://www.uoou.cz" class="text-teal-chic hover:underline" target="_blank" rel="noopener">www.uoou.cz</a>.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-dark py-6 mt-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-slate-light text-xs font-medium">© 2026 HairAtelier. Všechna práva vyhrazena.</p>
+      <div class="flex items-center gap-2">
+        <svg class="h-5 w-5 text-teal-chic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+        <span class="text-white font-extrabold text-sm">Hair<span class="text-teal-chic">Atelier</span></span>
+      </div>
+      <div class="flex gap-5 text-xs font-semibold text-slate-light">
+        <a href="privacy.html" class="hover:text-teal-chic transition-colors">Ochrana soukromí</a>
+        <a href="terms.html" class="hover:text-teal-chic transition-colors">Podmínky použití</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
