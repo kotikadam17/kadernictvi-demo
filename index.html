@@ -192,11 +192,6 @@
 
       <!-- Logo -->
       <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="flex items-center gap-3 flex-shrink-0">
-        <img src="./assets/logo-scissors.svg"
-             onerror="this.style.display='none'"
-             alt="Scissors icon"
-             class="h-8 w-8 object-contain" />
-        <!-- Inline fallback SVG scissors icon -->
         <svg class="h-8 w-8 text-teal-chic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
           <line x1="20" y1="4" x2="8.12" y2="15.88"/>
@@ -278,7 +273,7 @@
 
         <!-- Buttons -->
         <div class="flex flex-wrap gap-4">
-          <a href="#contact"
+          <a href="#" onclick="openContactModal(); return false;"
              class="bg-teal-chic hover:bg-white hover:text-teal-chic text-white font-bold px-8 py-4 rounded-full shadow-xl transition-all duration-300 text-base">
             Chci změnu
           </a>
@@ -528,7 +523,16 @@
           <!-- Item -->
           <div class="flex items-center justify-between py-5">
             <div>
-              <p class="font-bold text-navy-black text-base lg:text-lg">Společenský účes / Styling na akci</p>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Keratinová péče</p>
+              <p class="text-sm font-medium text-slate-light">Platnost až 4 měsíce</p>
+            </div>
+            <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">od 3 500 Kč</span>
+          </div>
+
+          <!-- Item -->
+          <div class="flex items-center justify-between py-5">
+            <div>
+              <p class="font-bold text-navy-black text-base lg:text-lg">Svatební & Společenský styling</p>
             </div>
             <span class="font-extrabold text-teal-chic text-base lg:text-lg whitespace-nowrap ml-4 lg:ml-6">od 1 600 Kč</span>
           </div>
@@ -760,7 +764,7 @@
             </div>
             <button onclick="openContactModal()"
                class="flex-shrink-0 bg-white text-teal-chic font-bold text-sm px-7 py-3 rounded-full hover:bg-navy-black hover:text-white transition-colors duration-300 cursor-pointer border-0">
-              Odeslat e-mail
+              Napsat zprávu
             </button>
           </div>
 
@@ -840,7 +844,7 @@
       <!-- Header -->
       <div class="mb-7">
         <span class="text-teal-chic font-bold text-xs uppercase tracking-widest">HairAtelier</span>
-        <h3 class="text-2xl font-extrabold text-navy-black mt-1">Napište nám</h3>
+        <h3 class="text-2xl font-extrabold text-navy-black mt-1">Rezervovat termín</h3>
         <p class="text-slate-light text-sm font-medium mt-1">Odpovídáme do 24 hodin.</p>
       </div>
 
