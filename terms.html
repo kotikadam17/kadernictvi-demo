@@ -164,14 +164,18 @@
        style="display:none;">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <p class="text-sm font-medium text-slate-light leading-relaxed">
-        Tento web používá technické cookies nezbytné pro jeho správné fungování.
+        Tento web používá cookies pro zajištění správného fungování a analýzu návštěvnosti.
         Více informací najdete v naší
         <a href="privacy.html" class="text-teal-chic hover:underline font-semibold">Ochraně soukromí</a>.
       </p>
       <div class="flex gap-3 flex-shrink-0">
+        <button onclick="rejectCookies()"
+                class="bg-transparent hover:bg-white/10 text-slate-light hover:text-white font-bold text-sm px-6 py-2.5 rounded-full transition-colors duration-300 cursor-pointer border border-slate-light/40 whitespace-nowrap">
+          Odmítnout
+        </button>
         <button onclick="acceptCookies()"
                 class="bg-teal-chic hover:bg-white hover:text-teal-chic text-white font-bold text-sm px-6 py-2.5 rounded-full transition-colors duration-300 cursor-pointer border-0 whitespace-nowrap">
-          Souhlasím
+          Přijmout vše
         </button>
       </div>
     </div>
@@ -180,13 +184,18 @@
   <script>
     (function () {
       var banner = document.getElementById('cookie-banner');
-      if (!localStorage.getItem('cookies_accepted')) {
+      if (!localStorage.getItem('cookies_choice')) {
         banner.style.display = 'block';
       }
     })();
 
     function acceptCookies() {
-      localStorage.setItem('cookies_accepted', '1');
+      localStorage.setItem('cookies_choice', 'accepted');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    function rejectCookies() {
+      localStorage.setItem('cookies_choice', 'rejected');
       document.getElementById('cookie-banner').style.display = 'none';
     }
   </script>
