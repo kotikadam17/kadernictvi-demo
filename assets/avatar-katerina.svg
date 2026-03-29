@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <clipPath id="circle-katerina">
+      <circle cx="50" cy="50" r="50"/>
+    </clipPath>
+    <radialGradient id="bg-katerina" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#e8e0d0"/>
+      <stop offset="100%" stop-color="#c8b898"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="50" cy="50" r="50" fill="url(#bg-katerina)"/>
+
+  <!-- Body / elegant top -->
+  <ellipse cx="50" cy="108" rx="32" ry="22" fill="#7a4a6a"/>
+  <ellipse cx="50" cy="100" rx="26" ry="16" fill="#8a5a7a"/>
+
+  <!-- Neck -->
+  <rect x="44" y="72" width="12" height="14" rx="5" fill="#f0c8a8"/>
+
+  <!-- Head -->
+  <ellipse cx="50" cy="59" rx="20" ry="22" fill="#f0c8a8"/>
+
+  <!-- Hair - blonde, elegant updo with loose strands -->
+  <!-- Main hair mass on top -->
+  <ellipse cx="50" cy="42" rx="22" ry="16" fill="#c8a040"/>
+  <!-- Updo bun -->
+  <ellipse cx="50" cy="33" rx="13" ry="10" fill="#b89030"/>
+  <ellipse cx="50" cy="32" rx="10" ry="7" fill="#c8a040"/>
+  <!-- Hair sides framing face -->
+  <path d="M29 55 Q26 65 27 78 Q31 73 33 65 Q33 58 31 54 Z" fill="#c8a040"/>
+  <path d="M71 55 Q74 65 73 78 Q69 73 67 65 Q67 58 69 54 Z" fill="#c8a040"/>
+  <!-- Soft strand left -->
+  <path d="M30 56 Q29 64 31 72 Q33 68 33 60 Z" fill="#b89030"/>
+  <!-- Soft strand right -->
+  <path d="M70 56 Q71 64 69 72 Q67 68 67 60 Z" fill="#b89030"/>
+
+  <!-- Ear left -->
+  <ellipse cx="30" cy="61" rx="3" ry="4.5" fill="#f0c8a8"/>
+  <!-- Ear right -->
+  <ellipse cx="70" cy="61" rx="3" ry="4.5" fill="#f0c8a8"/>
+
+  <!-- Small earring left -->
+  <circle cx="30" cy="63" r="2" fill="#d4af37"/>
+  <!-- Small earring right -->
+  <circle cx="70" cy="63" r="2" fill="#d4af37"/>
+
+  <!-- Eyes - almond shaped, slightly larger -->
+  <path d="M39.5 59.5 Q43 57 46.5 59.5 Q43 62 39.5 59.5 Z" fill="#fff"/>
+  <path d="M53.5 59.5 Q57 57 60.5 59.5 Q57 62 53.5 59.5 Z" fill="#fff"/>
+  <circle cx="43" cy="59.8" r="2.3" fill="#3a5a2a"/>
+  <circle cx="57" cy="59.8" r="2.3" fill="#3a5a2a"/>
+  <circle cx="43.8" cy="58.9" r="0.75" fill="#fff"/>
+  <circle cx="57.8" cy="58.9" r="0.75" fill="#fff"/>
+
+  <!-- Eyelashes - upper lid -->
+  <path d="M39.5 58 Q43 56.5 46.5 58" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M53.5 58 Q57 56.5 60.5 58" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyebrows - arched, elegant -->
+  <path d="M39 54.5 Q43 52 47 54" stroke="#8a6020" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <path d="M53 54 Q57 52 61 54.5" stroke="#8a6020" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose - delicate -->
+  <path d="M49.5 62.5 Q49 66 48 67.5 Q50 69 52 67.5 Q51 66 50.5 62.5" fill="#e0b090" stroke="none"/>
+
+  <!-- Lips - defined, with slight smile -->
+  <path d="M44.5 72 Q47 70.5 50 71 Q53 70.5 55.5 72" fill="#cc7070"/>
+  <path d="M44.5 72 Q50 75.5 55.5 72" stroke="#b05060" stroke-width="1.5" fill="#e08080" stroke-linecap="round"/>
+  <!-- Cupid's bow -->
+  <path d="M46 72 Q48 70.5 50 71.5 Q52 70.5 54 72" stroke="#b05060" stroke-width="0.8" fill="none"/>
+
+  <!-- Cheek blush -->
+  <ellipse cx="37" cy="65" rx="5.5" ry="3.5" fill="#f0a0a0" opacity="0.35"/>
+  <ellipse cx="63" cy="65" rx="5.5" ry="3.5" fill="#f0a0a0" opacity="0.35"/>
+</svg>
