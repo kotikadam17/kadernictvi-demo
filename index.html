@@ -217,10 +217,12 @@
 
       <!-- CTA + Mobile hamburger -->
       <div class="flex items-center gap-4">
-        <button onclick="openContactModal()"
-           class="hidden sm:inline-block bg-teal-chic hover:bg-slate-dark text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300 shadow-md cursor-pointer border-0">
-          Rezervovat termín
-        </button>
+        <div class="reservio-button-container hidden sm:block"
+             data-text="Rezervovat termín"
+             data-size="small"
+             data-color="#3C7A89"
+             data-url="https://l9-studios.reservio.com">
+        </div>
         <!-- Hamburger (mobile) -->
         <button id="menu-btn" class="lg:hidden focus:outline-none text-navy-black" aria-label="Otevřít menu">
           <i class="fa-solid fa-bars text-2xl"></i>
@@ -237,11 +239,12 @@
         <li><a href="#testimonials" class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Recenze</a></li>
         <li><a href="#contact"      class="hover:text-teal-chic transition-colors" onclick="closeMobileMenu()">Kontakt</a></li>
         <li>
-          <button
-             class="inline-block bg-teal-chic text-white text-sm font-bold px-6 py-3 rounded-full transition-colors duration-300 cursor-pointer border-0"
-             onclick="closeMobileMenu(); openContactModal()">
-            Rezervovat termín
-          </button>
+          <div class="reservio-button-container"
+               data-text="Rezervovat termín"
+               data-size="small"
+               data-color="#3C7A89"
+               data-url="https://l9-studios.reservio.com">
+          </div>
         </li>
       </ul>
     </div>
@@ -472,10 +475,12 @@
           <p class="text-slate-light font-medium leading-relaxed mb-8">
             Věříme v otevřenost. Níže najdete přehled našich cen – konečná cena se může lišit dle délky a hustoty vlasů. Rádi vám sdělíme přesnou kalkulaci při rezervaci.
           </p>
-          <button onclick="openContactModal()"
-             class="inline-block bg-teal-chic text-white font-bold px-8 py-4 rounded-full hover:bg-slate-dark transition-colors duration-300 cursor-pointer border-0">
-            Rezervovat termín
-          </button>
+          <div class="reservio-button-container"
+               data-text="Rezervovat termín"
+               data-size="small"
+               data-color="#3C7A89"
+               data-url="https://l9-studios.reservio.com">
+          </div>
         </div>
 
         <!-- Right: Price list -->
@@ -1104,5 +1109,6 @@
     }
   </script>
 
+  <script src="https://cdn.reservio.com/widget/button-bundle.js"></script>
 </body>
 </html>
